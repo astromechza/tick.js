@@ -116,6 +116,10 @@
 		return this.add(-milliseconds)
 	}
 
+	Tick.prototype.getDate = function() {
+		return this._d
+	}
+
 	function timeZone(offset) {
 		if (offset == 0) return '+00:00';
 		v = Math.abs(offset);
