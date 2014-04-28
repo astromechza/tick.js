@@ -50,7 +50,7 @@ tick(0).toString("%dayofweek %dd %month %YYYY") == "Thursday 1 January 1970"
 | %mm     | Two digit minute (00 - 59) |
 | %ss     | Two digit second (00 - 59) |
 | %zzz     | Three digit millisecond (000 - 999) |
-| %tz     | Time zone suffix (Z, +02:00)|
+| %tz     | Time zone suffix (+00:00, +02:00)|
 | %dayofweek     | String day of week (Monday, Tuesday)|
 | %month     | String month of year (January, February)|
 
