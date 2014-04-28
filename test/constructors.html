@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"></meta>
+	<title></title>
+</head>
+<body onload="main()">
+	<script type="text/javascript" src="../js/tick.js"></script>
+	<script type="text/javascript">
+		var main = function _main() {
+			var t = tick(new Date());
+
+			console.log( t )
+
+			console.log(t.to_s())
+
+			console.log(t.to_iso())
+			console.log(t.to_iso())
+
+			console.log(t.to_s("DD-MM-YYYY (hh:mm:ss)"))
+
+			console.log(tick(0).to_iso())
+		}
+	</script>
+</body>
+</html>
