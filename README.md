@@ -2,6 +2,8 @@
 
 A very small and simple datetime formatting library.
 
+Minified size: 1.79kB.
+
 ### Constructors
 - Now:
 ```
