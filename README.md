@@ -2,7 +2,7 @@
 
 A very small and simple datetime formatting library.
 
-Minified size: 1.79kB.
+Minified size: 2.61kB.
 
 ### Constructors
 - Now:
@@ -31,7 +31,7 @@ tick("1970-01-01T02:00:00.000+02:00")
 // with timezone info
 tick(0).toISO8601() == "1970-01-01T02:00:00.000+02:00"
 // utc
-tick(0).toISO8601() == "1970-01-01T00:00:00.000Z"
+tick(0).toISO8601() == "1970-01-01T00:00:00.000+00:00"
 ```
 
 - .toString(format)
@@ -56,3 +56,8 @@ tick(0).toString("%dayofweek %dd %month %YYYY") == "Thursday 1 January 1970"
 | %dayofweek     | String day of week (Monday, Tuesday)|
 | %month     | String month of year (January, February)|
 
+- .shiftToTZ(string) and .shiftToOffset(minutes)
+Time zone shifting
+
+- .add() and .subtract()
+To be completed
