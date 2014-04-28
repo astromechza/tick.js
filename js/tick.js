@@ -46,7 +46,7 @@
 		this._month = longMonths[this._d.getMonth()];
 	}
 
-	Tick.prototype.to_s = function(format) {
+	Tick.prototype.toString = function(format) {
 		if (format === undefined) {
 			return this._d.toString();
 		} else {
@@ -65,7 +65,7 @@
 		}
 	};
 
-	Tick.prototype.to_iso = function() {
+	Tick.prototype.toISO8601 = function() {
 		return "" + this._YYYY + "-" + this._MM + "-" + this._DD + 
 			"T" + this._hh + ":" + this._mm + ":" + this._ss + "." + this._zzz + this._tz;
 	}
@@ -82,7 +82,7 @@
 	}
 
 	function timeZone(offset) {
-		if (offset == 0) return 'Z';
+		if (offset == 0) return '+00:00';
 		v = Math.abs(offset);
 		m = v / 60;
 		s = v % 60;

@@ -47,27 +47,27 @@
 			)
 
 			equal(
-				tick(0).to_s(), 
+				tick(0).toString(), 
 				new Date(0).toString()
 			)
 
 			equal(
-				tick(0).to_s('%YYYY'), 
+				tick(0).toString('%YYYY'), 
 				'1970'
 			)
 
 			equal(
-				tick(0).to_s('%MM %YYYY'), 
+				tick(0).toString('%MM %YYYY'), 
 				'01 1970'
 			)
 
 			equal(
-				tick(0).to_s('%month'), 
+				tick(0).toString('%month'), 
 				'January'
 			)
 
 			equal(
-				tick(0).to_s('%DD %dayofweek %dd'), 
+				tick(0).toString('%DD %dayofweek %dd'), 
 				'01 Thursday 1' 
 			)
 
