@@ -47,22 +47,19 @@
 	}
 
 	Tick.prototype.toString = function(format) {
-		if (format === undefined) {
-			return this._d.toString();
-		} else {
-			ns = format.replace('%YYYY', this._YYYY)
-			ns = ns.replace('%MM', this._MM)
-			ns = ns.replace('%dd', this._D)
-			ns = ns.replace('%DD', this._DD)
-			ns = ns.replace('%hh', this._hh)
-			ns = ns.replace('%mm', this._mm)
-			ns = ns.replace('%ss', this._ss)
-			ns = ns.replace('%zzz', this._zzz)
-			ns = ns.replace('%tz', this._tz)
-			ns = ns.replace('%dayofweek', this._day)
-			ns = ns.replace('%month', this._month)
-			return ns;
-		}
+		if (format === undefined) return this._d.toString()
+
+		ns = format.replace('%YYYY', this._YYYY)
+		ns = ns.replace('%MM', this._MM)
+		ns = ns.replace('%dd', this._D)
+		ns = ns.replace('%DD', this._DD)
+		ns = ns.replace('%hh', this._hh)
+		ns = ns.replace('%mm', this._mm)
+		ns = ns.replace('%ss', this._ss)
+		ns = ns.replace('%zzz', this._zzz)
+		ns = ns.replace('%tz', this._tz)
+		ns = ns.replace('%dayofweek', this._day)
+		return ns.replace('%month', this._month)
 	};
 
 	Tick.prototype.toISO8601 = function() {
@@ -71,9 +68,8 @@
 	}
 
 	Tick.prototype.eq = function(other) {
-		if (typeof(input) == 'string') {
-			return new Date(other).valueOf() == this.valueOf();
-		} 
+		if (typeof(input) == 'string') return new Date(other).valueOf() == this.valueOf();
+		
 		return other.valueOf() == this.valueOf();
 	}
 
@@ -84,9 +80,7 @@
 	function timeZone(offset) {
 		if (offset == 0) return '+00:00';
 		v = Math.abs(offset);
-		m = v / 60;
-		s = v % 60;
-		return ((offset > 0) ? "-" : "+") + zeroPad(m, 2) + ":" + zeroPad(s, 2);
+		return ((offset > 0) ? "-" : "+") + zeroPad(v / 60, 2) + ":" + zeroPad(v % 60, 2);
 	}
 
 	function buildFrom(input) {
