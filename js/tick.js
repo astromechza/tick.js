@@ -29,21 +29,29 @@
 			'October', 
 			'November',
 			'December'
-		]
+		],
+		parsableTZ = /((?:UTC)|(?:GMT))(?:([+-])(\d\d?)(?::(\d\d))?)?/,
+		otherTZs = {
+			'PST' : 480,
+			'SAST' : -120,
+			'PDT' : 420
+		}
 
 	function Tick(input) {
-		this._d = buildFrom(input);
-		this._YYYY = this._d.getFullYear();
-		this._MM = zeroPad(this._d.getMonth()+1, 2);
-		this._D = ''+this._d.getDate();
-		this._DD = zeroPad(this._d.getDate(), 2);
-		this._hh = zeroPad(this._d.getHours(), 2);
-		this._mm = zeroPad(this._d.getMinutes(), 2);
-		this._ss = zeroPad(this._d.getSeconds(), 2);
-		this._zzz = zeroPad(this._d.getMilliseconds(), 3);
-		this._tz = timeZone(this._d.getTimezoneOffset());
-		this._day = longDays[this._d.getDay()];
-		this._month = longMonths[this._d.getMonth()];
+		this._d = buildFrom(input)
+		this._YYYY = this._d.getFullYear()
+		this._MM = zeroPad(this._d.getMonth()+1, 2)
+		this._D = ''+this._d.getDate()
+		this._DD = zeroPad(this._d.getDate(), 2)
+		this._hh = zeroPad(this._d.getHours(), 2)
+		this._mm = zeroPad(this._d.getMinutes(), 2)
+		this._ss = zeroPad(this._d.getSeconds(), 2)
+		this._zzz = zeroPad(this._d.getMilliseconds(), 3)
+		this._tz = timeZone(this._d.getTimezoneOffset())
+		this._day = longDays[this._d.getDay()]
+		this._month = longMonths[this._d.getMonth()]
+
+		this._knownTimezoneOffset = this._d.getTimezoneOffset()
 	}
 
 	Tick.prototype.toString = function(format) {
@@ -77,13 +85,27 @@
 		return this._d.valueOf();
 	}
 
-	// copy to new object, shift display values to specific timezone
-	Tick.prototype.shiftTo = function(tzoffset) {
-		ms = this.valueOf() + this._d.getTimezoneOffset() * 60000 - tzoffset * 60000
-		r = new Tick(ms)
+	// copy to new object, shift display values to specific timezone with the given offset minutes
+	Tick.prototype.shiftToOffset = function(tzoffset) {
+		if (typeof tzoffset != 'number') return null
+		r = new Tick(this.valueOf() + this._knownTimezoneOffset * 60000 - tzoffset * 60000)
 		r._d = new Date(this.valueOf())
 		r._tz = timeZone(tzoffset)
+		r._knownTimezoneOffset = tzoffset
 		return r
+	}
+
+	Tick.prototype.shiftToTZ = function(tzstring) {
+		m = parsableTZ.exec(tzstring)
+		if (m != null) {
+			m[2] = m[2] || ''
+			m[3] = m[3] || ''
+			m[4] = m[4] || ''
+			offset = ((m[2] == '+') ? -1 : 1) * Number(m[3]) * 60 + Number(m[4])
+			return this.shiftToOffset(offset)
+		}
+		if (tzstring in otherTZs) return this.shiftToOffset(otherTZs[tzstring]) 
+		return null;
 	}
 
 	Tick.prototype.add = function(milliseconds) {
@@ -97,7 +119,7 @@
 	function timeZone(offset) {
 		if (offset == 0) return '+00:00';
 		v = Math.abs(offset);
-		return ((offset > 0) ? "-" : "+") + zeroPad(v / 60, 2) + ":" + zeroPad(v % 60, 2);
+		return ((offset > 0) ? "-" : "+") + zeroPad(Math.floor(v / 60), 2) + ":" + zeroPad(v % 60, 2);
 	}
 
 	function buildFrom(input) {
