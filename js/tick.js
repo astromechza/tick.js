@@ -47,7 +47,7 @@
 	}
 
 	Tick.prototype.toString = function(format) {
-		if (format === undefined) return this._d.toString()
+		if (format === undefined) format = '%dd %month %YYYY %hh:%mm:%ss.%zzz %tz'
 
 		ns = format.replace('%YYYY', this._YYYY)
 		ns = ns.replace('%MM', this._MM)
@@ -69,12 +69,21 @@
 
 	Tick.prototype.eq = function(other) {
 		if (typeof(input) == 'string') return new Date(other).valueOf() == this.valueOf();
-		
+
 		return other.valueOf() == this.valueOf();
 	}
 
 	Tick.prototype.valueOf = function() {
 		return this._d.valueOf();
+	}
+
+	// copy to new object, shift display values to specific timezone
+	Tick.prototype.shiftTo = function(tzoffset) {
+		ms = this.valueOf() + this._d.getTimezoneOffset() * 60000 - tzoffset * 60000
+		r = new Tick(ms)
+		r._d = new Date(this.valueOf())
+		r._tz = timeZone(tzoffset)
+		return r
 	}
 
 	function timeZone(offset) {
