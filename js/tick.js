@@ -86,6 +86,14 @@
 		return r
 	}
 
+	Tick.prototype.add = function(milliseconds) {
+		return new Tick(this.valueOf() + milliseconds)
+	}
+
+	Tick.prototype.subtract = function(milliseconds) {
+		return this.add(-milliseconds)
+	}
+
 	function timeZone(offset) {
 		if (offset == 0) return '+00:00';
 		v = Math.abs(offset);
