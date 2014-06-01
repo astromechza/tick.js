@@ -235,6 +235,31 @@ test( "shiftToTZ()", function() {
         "shiftToTZ does show up in ISO8601"
     )
 
+    equal(
+        tick(ms).shiftToOffset(480)._tz,
+        tick(ms).shiftToTZ('PST')._tz,
+        "PST is allowed"
+    )
+
+    equal(
+        tick(ms).shiftToOffset(420)._tz,
+        tick(ms).shiftToTZ('PDT')._tz,
+        "PDT is allowed"
+    )
+
+    equal(
+        tick(ms).shiftToOffset(-120)._tz,
+        tick(ms).shiftToTZ('SAST')._tz,
+        "SAST is allowed"
+    )
+
+    Tick.addTimeZone('XXX', -600)
+    equal(
+        tick(ms).shiftToOffset(-600)._tz,
+        tick(ms).shiftToTZ('XXX')._tz,
+        "Allow added timezones to be used"
+    )
+
 })
 
 test( "toISO8601()", function() {

@@ -119,6 +119,10 @@
 		return this._d
 	}
 
+	Tick.addTimeZone = function(name, offset) {
+		otherTZs[name] = offset
+	}
+
 	function timeZone(offset) {
 		if (offset == 0) return 'Z';
 		v = Math.abs(offset);
@@ -152,4 +156,5 @@
 	}
 
 	globalScope.tick = tick
+	globalScope.Tick = Tick
 }).call(this);
