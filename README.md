@@ -74,13 +74,15 @@ tick(0).shiftToTZ('SAST').toString() == "1 January 1970 02:00:00 +02:00"
 ```
 
 - .shiftToOffset(minutes)
+
 For raw shifting by an amount of minutes past UTC
 ```
 tick(0).shiftToOffset(-120).toString() == "1 January 1970 02:00:00 +02:00"
 ```
 
 - Tick.addTimeZone(name, minutes)
-Tick doesn't support many named timezones, but you can add more if you want
+
+tick.js doesn't support many named timezones, but you can add more if you need them:
 ```
 Tick.addTimeZone('CET', -60)
 tick(0).shiftToTZ('CET').toString() == "1 January 1970 01:00:00.000 +01:00"
@@ -104,6 +106,7 @@ tick(0).equals("1970-01-01T00:00:00.000Z") == true
 
 ## ValueOf
 - .valueOf()
+
 Returns the number of milliseconds since epoch
 ```
 tick(0).valueOf() == 0
