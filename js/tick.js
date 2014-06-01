@@ -1,7 +1,7 @@
 // tick.js - time formatting library
 // author: Ben Meier (AstromechZA)
 //
-// The goal of this library is to provide a small and simplified 
+// The goal of this library is to provide a small and simplified
 // date time display library.
 
 (function(undefined){
@@ -22,15 +22,15 @@
 			'March',
 			'April',
 			'May',
-			'June', 
+			'June',
 			'July',
 			'August',
 			'September',
-			'October', 
+			'October',
 			'November',
 			'December'
 		],
-		parsableTZ = /((?:UTC)|(?:GMT))(?:([+-])(\d\d?)(?::(\d\d))?)?/,
+		parsableTZ = /((?:UTC)|(?:GMT))(?:([+-]?)(\d\d?)(?::(\d\d))?)?/,
 		otherTZs = {
 			'PST' : 480,
 			'SAST' : -120,
@@ -71,13 +71,12 @@
 	};
 
 	Tick.prototype.toISO8601 = function() {
-		return "" + this._YYYY + "-" + this._MM + "-" + this._DD + 
+		return "" + this._YYYY + "-" + this._MM + "-" + this._DD +
 			"T" + this._hh + ":" + this._mm + ":" + this._ss + "." + this._zzz + this._tz;
 	}
 
-	Tick.prototype.eq = function(other) {
-		if (typeof(input) == 'string') return new Date(other).valueOf() == this.valueOf();
-
+	Tick.prototype.equals = function(other) {
+		if (typeof(other) == 'string') return new Date(other).valueOf() == this.valueOf();
 		return other.valueOf() == this.valueOf();
 	}
 
@@ -101,10 +100,10 @@
 			m[2] = m[2] || ''
 			m[3] = m[3] || ''
 			m[4] = m[4] || ''
-			offset = ((m[2] == '+') ? -1 : 1) * Number(m[3]) * 60 + Number(m[4])
+			offset = ((m[2] == '-') ? 1 : -1) * (Number(m[3]) * 60 + Number(m[4]))
 			return this.shiftToOffset(offset)
 		}
-		if (tzstring in otherTZs) return this.shiftToOffset(otherTZs[tzstring]) 
+		if (tzstring in otherTZs) return this.shiftToOffset(otherTZs[tzstring])
 		return null;
 	}
 
@@ -121,7 +120,7 @@
 	}
 
 	function timeZone(offset) {
-		if (offset == 0) return '+00:00';
+		if (offset == 0) return 'Z';
 		v = Math.abs(offset);
 		return ((offset > 0) ? "-" : "+") + zeroPad(Math.floor(v / 60), 2) + ":" + zeroPad(v % 60, 2);
 	}
