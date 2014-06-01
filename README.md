@@ -4,6 +4,8 @@ A very small and simple datetime formatting library.
 
 Minified size: 2.6kB.
 
+Usage: Add [tick.min.js](../../releases/tag/v1.0.1) to your site.
+
 ## Constructors
 - Now:
 ```
