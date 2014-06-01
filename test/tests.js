@@ -266,21 +266,45 @@ test( "toISO8601()", function() {
 
     // this test is complicated by timezones :/
     // but at least it demonstrates the concept of shifting
-    epoch_gmt = tick(0).shiftToOffset(0)
-
     equal(
-       epoch_gmt.toISO8601(),
+       tick(0).shiftToOffset(0).toISO8601(),
        "1970-01-01T00:00:00.000Z",
        "== correct string"
     )
 
     // test an example for when the timezone is not gmt
-    epoch_2 = tick(0).shiftToOffset(-120)
-
     equal(
-       epoch_2.toISO8601(),
+       tick(0).shiftToOffset(-120).toISO8601(),
        "1970-01-01T02:00:00.000+02:00",
        "== correct string"
+    )
+
+})
+
+test( "toString()", function() {
+
+    equal(
+       tick(0).shiftToOffset(0).toString(),
+       "1 January 1970 00:00:00.000 Z",
+       "== correct string when no arguments are passed"
+    )
+
+    equal(
+       tick(0).shiftToOffset(-120).toString(),
+       "1 January 1970 02:00:00.000 +02:00",
+       "== correct string with timezone when no arguments are passed"
+    )
+
+    equal(
+       tick(0).shiftToOffset(0).toString("%dayofweek %dd %month %YYYY"),
+       "Thursday 1 January 1970",
+       "== correct string when format is passed"
+    )
+
+    equal(
+       tick(0).shiftToOffset(0).toString("%dayofweek %dd %month %YYYY"),
+       "Thursday 1 January 1970",
+       "== correct string when format is passed"
     )
 
 })
