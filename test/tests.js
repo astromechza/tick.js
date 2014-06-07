@@ -253,7 +253,7 @@ test( "shiftToTZ()", function() {
         "SAST is allowed"
     )
 
-    Tick.addTimeZone('XXX', -600)
+    tick.addTimeZone('XXX', -600)
     equal(
         tick(ms).shiftToOffset(-600)._tz,
         tick(ms).shiftToTZ('XXX')._tz,

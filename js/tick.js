@@ -37,6 +37,8 @@
 			'PDT' : 420
 		}
 
+	// == Tick object that does all the real work ==
+
 	function Tick(input) {
 		this._d = buildFrom(input)
 		this._YYYY = this._d.getFullYear()
@@ -123,6 +125,8 @@
 		otherTZs[name] = offset
 	}
 
+	// == Util methods ==
+
 	function timeZone(offset) {
 		if (offset == 0) return 'Z';
 		v = Math.abs(offset);
@@ -151,10 +155,29 @@
     	return nl >= l ? n : new Array(l-nl+1).join('0') + n;
     }
 
+	// == tick Object that is actually exposed ==
+
 	tick = function(input) {
 		return new Tick(input);
 	}
 
-	globalScope.tick = tick
-	globalScope.Tick = Tick
+	tick.addTimeZone = function(name, offset) {
+		Tick.addTimeZone(name, offset);
+	}
+
+	// == Expose tick ==
+	
+	// nodeJS
+	if(typeof module !== 'undefined' && module.exports) {
+		module.exports = tick;
+	// AMD
+	} else if (typeof define === 'function' && define.amd) {
+		define('tick', function(require, exports, module) {
+			return tick;
+		});
+	// fallback
+	} else {
+		globalScope.tick = tick
+	}
+
 }).call(this);
