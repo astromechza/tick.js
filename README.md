@@ -82,11 +82,11 @@ For raw shifting by an amount of minutes past UTC
 tick(0).shiftToOffset(-120).toString() == "1 January 1970 02:00:00 +02:00"
 ```
 
-- Tick.addTimeZone(name, minutes)
+- tick.addTimeZone(name, minutes)
 
 tick.js doesn't support many named timezones, but you can add more if you need them:
 ```
-Tick.addTimeZone('CET', -60)
+tick.addTimeZone('CET', -60)
 tick(0).shiftToTZ('CET').toString() == "1 January 1970 01:00:00.000 +01:00"
 ```
 
